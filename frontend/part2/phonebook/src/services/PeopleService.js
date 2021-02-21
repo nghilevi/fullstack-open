@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/api/persons'
+const baseUrl = 'https://fso-backend-1.herokuapp.com/api/persons'
 
 const getAll = () => {
     return axios
