@@ -1,6 +1,9 @@
+require('dotenv').config()
+
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/person')
 
 const app = express()
 
@@ -34,13 +37,25 @@ const phonebooks = {
         }
     ]
 }
+/*
+const person = new Person({
+    "name": "Ada Lovelace",
+    "phoneNumber": "39-44-5323523"
+});
+*/
+
+person.save().then(result => {
+    console.log('person saved!')
+});
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (req, res) => {
-    res.json(phonebooks)
+    Person.find({}).then(result => {
+        res.json(result)
+    })
 })
 
 app.get('/api/persons/:id', (req, res) => {
@@ -85,7 +100,7 @@ app.post('/api/persons/', (req, res) => {
     res.json(phonebooks.persons)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
