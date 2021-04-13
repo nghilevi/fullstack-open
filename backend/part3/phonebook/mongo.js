@@ -31,7 +31,7 @@ if(name && phoneNumber){
 }else if(name == undefined && phoneNumber == undefined){
     Entry.find({}).then(result => {
         result.forEach(e => {
-          console.log(e)
+          console.log(e.name + ' '+ e.phoneNumber);
         })
         mongoose.connection.close() // database connection will be closed
       })
