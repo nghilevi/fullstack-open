@@ -13,38 +13,13 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use(express.static('build'))
 
-const phonebooks = {
-    "persons": [
-        {
-            "name": "Arto Hellas",
-            "number": "123123123",
-            "id": 1
-        },
-        {
-            "name": "Ada Lovelace",
-            "number": "39-44-5323523",
-            "id": 2
-        },
-        {
-            "name": "Dan Abramov",
-            "number": "1231231",
-            "id": 3
-        },
-        {
-            "name": "Mary Poppendieck",
-            "number": "39-23-6423122",
-            "id": 4
-        }
-    ]
-}
-
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(result => {
-        res.json(result)
+        res.json(result) // toJSON is called when we make a Json object from a schema
     })
 })
 
@@ -65,15 +40,13 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.get('/info', (req, res) => {
     res.send(`
-        <p>Phonebook has info for ${phonebooks.persons.length} people</p>
+        <p>Phonebook has info for all people</p>
         <p>${new Date()}</p>
     `)
 })
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id
-    phonebooks.persons = phonebooks.persons.filter(person => person.id !== id)
-
     Person.remove({_id: id}).then((foundProfile) => {
         res.status(204).end()
     }).catch((err) => {
