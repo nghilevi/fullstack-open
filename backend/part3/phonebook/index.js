@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const Person = require('./models/person')
+const Person = require('./models/person') // Person model / resource
 
 const app = express()
 
@@ -37,16 +37,6 @@ const phonebooks = {
         }
     ]
 }
-/*
-const person = new Person({
-    "name": "Ada Lovelace",
-    "phoneNumber": "39-44-5323523"
-});
-*/
-
-person.save().then(result => {
-    console.log('person saved!')
-});
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
@@ -60,12 +50,17 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/api/persons/:id', (req, res) => {
     const searchId = req.params.id;
-    const foundProfile = phonebooks.persons.find(profile => profile.id === parseInt(searchId));
-    if(foundProfile){
-        res.json(foundProfile)
-    }else{
-        res.status(404).end()
-    }
+    
+    // TODO why _id not id
+    Person.find({_id: searchId}).then((foundProfile) => {
+        if(foundProfile){
+            res.json(foundProfile)
+        }else{
+            res.status(404).end()
+        }
+    }).catch((err) => {
+        console.log('error fetching: ',err.message)
+    })
 })
 
 app.get('/info', (req, res) => {
@@ -76,28 +71,33 @@ app.get('/info', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id)
+    const id = req.params.id
     phonebooks.persons = phonebooks.persons.filter(person => person.id !== id)
-    res.status(204).end()
+
+    Person.remove({_id: id}).then((foundProfile) => {
+        res.status(204).end()
+    }).catch((err) => {
+        console.log('error removing: ',err.message)
+    })
 })
 
-app.post('/api/persons/', (req, res) => {
-    const persons = phonebooks.persons;
+app.post('/api/persons/', (req, res) => { // the req body must be in the form of application/json
     const reqPerson = req.body
+    console.log('reqPerson: ', reqPerson);
 
     if(!reqPerson.name || !reqPerson.number){
         return res.json('name or number is missing')
     }
 
-    if(persons.find(e => e.name == reqPerson.name)){
-        return res.json('name must be unique')
-    }
+    const person = new Person({
+        name: reqPerson.name,
+        number: reqPerson.number
+    });
 
-    const maxId = persons.length > 0 ? Math.max(...persons.map(n => n.id)) : 0
+    person.save().then((savedPerson)=>{
+        res.json(savedPerson)
+    })
     
-    reqPerson.id = maxId + 1;
-    phonebooks.persons = phonebooks.persons.concat(reqPerson);
-    res.json(phonebooks.persons)
 })
 
 const PORT = process.env.PORT

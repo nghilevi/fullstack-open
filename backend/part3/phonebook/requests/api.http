@@ -1,15 +1,18 @@
 @host = http://localhost:3001
 
-DELETE {{host}}/api/persons/4 http/1.1
+GET {{host}}/api/persons http/1.1
 
 ###
-GET {{host}}/api/persons http/1.1
+GET {{host}}/api/persons/6076fd9c86b37d371e3d8c73 http/1.1
+
+###
+DELETE {{host}}/api/persons/6076fd9c86b37d371e3d8c73 http/1.1
 
 ###
 POST {{host}}/api/persons http/1.1
 content-type: application/json
 
 {
-    "name": "Ronaldo",
-    "number": "112"
+    "name": "Donald Trump",
+    "number": "147"
 }
