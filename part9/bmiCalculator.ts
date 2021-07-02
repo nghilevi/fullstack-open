@@ -1,22 +1,26 @@
 const calculateBmi = (height: number, weight: number): string => {
-    const bmi: Number = weight/(height/100)**2;
-    if(bmi<15) {
-        return "Very severely underweight";
-    }else if(bmi>=15 && bmi<16){
-         return "Severely underweight";
-    }else if(bmi>=16 && bmi<18.5){
-        return "Underweight";
-    }else if(bmi>=18.5 && bmi<25){
-        return "Normal (healthy weight)";
-    }else if(bmi>=25 && bmi<30){
-        return "Overweight";
-    }else if(bmi>=30 && bmi<35){
-        return "Obese Class I (Moderately obese)";
-    }else if(bmi>=35 && bmi<40){
-        return "Obese Class II (Severely obese)";
-    }else{
-        return "Obese Class III (Very severely obese)";
-    }
+    const bmi: number = weight/(height/100)**2;
+    let range = [40, 35, 30, 25, 18.5, 16, 15];
+    range.push(bmi);
+    range.sort((a,b) => a-b); // ascending sort
+    let assessments = [
+        'Very severely underweight', 
+        'Severely underweight',
+        'Underweight',
+        'Normal (healthy weight)',
+        'Overweight',
+        'Obese Class I (Moderately obese)',
+        'Obese Class II (Severely obese)',
+        'Obese Class III (Very severely obese)'
+    ]
+    return assessments[range.indexOf(bmi)];
 }
 
-console.log(calculateBmi(180, 74));
+const extractArgs = (argArr:any):any => {
+    const height = Number(argArr[2]), weight= Number(argArr[3]);
+    return [height, weight];
+}
+
+// const args = [180, 74];
+const args = extractArgs(process.argv)
+console.log(calculateBmi.apply(this, args));

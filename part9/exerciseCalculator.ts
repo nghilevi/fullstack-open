@@ -36,4 +36,14 @@ const calculateExercises = (dailyExcerciseHrs: number[], target: number):evalRes
     }
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+const extractArgs = (argArr:any):any => {
+    const target = argArr[2];
+    const hrsArr = argArr.slice(3).map((hr:any) => Number(hr));
+    return [hrsArr, target];
+}
+
+//const args = [[3, 0, 2, 4.5, 0, 3, 1], 2]
+const args = extractArgs(process.argv)
+console.log(calculateExercises.apply(this, args));
+
+export {};
