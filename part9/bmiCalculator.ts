@@ -24,3 +24,5 @@ const extractArgs = (argArr:any):any => {
 // const args = [180, 74];
 const args = extractArgs(process.argv)
 console.log(calculateBmi.apply(this, args));
+
+export {calculateBmi}
