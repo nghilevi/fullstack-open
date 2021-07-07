@@ -9,16 +9,16 @@ interface evalResult {
 }
 
 const calculateExercises = (dailyExcerciseHrs: number[], target: number):evalResult => {
-    const ratingLevels = ['bad', 'good', 'excellent']
+    const ratingLevels = ['bad', 'good', 'excellent'];
     const periodLength: number = dailyExcerciseHrs.length;
-    let totalHrs: number = 0;
-    let trainingDays: number = 0;
+    let totalHrs = 0;
+    let trainingDays = 0;
     dailyExcerciseHrs.forEach(hr => {
         totalHrs += hr;
         if(hr>0){
             trainingDays++;
         }
-    })
+    });
     const average = totalHrs/periodLength;
     const success = average >= target;
     const resultComparision = average - target - 1;
@@ -33,17 +33,17 @@ const calculateExercises = (dailyExcerciseHrs: number[], target: number):evalRes
         ratingDescription,
         target,
         average
-    }
-}
+    };
+};
 
-const extractArgs = (argArr:any):any => {
-    const target = argArr[2];
-    const hrsArr = argArr.slice(3).map((hr:any) => Number(hr));
+const extractArgs = (argArr:string[]):(number| number[])[] => {
+    const target = Number(argArr[2]);
+    const hrsArr = argArr.slice(3).map((hr:string) => Number(hr));
     return [hrsArr, target];
-}
+};
 
 //const args = [[3, 0, 2, 4.5, 0, 3, 1], 2]
-const args = extractArgs(process.argv)
+const args = extractArgs(process.argv);
 console.log(calculateExercises.apply(this, args));
 
-export {};
+export {calculateExercises, evalResult};
