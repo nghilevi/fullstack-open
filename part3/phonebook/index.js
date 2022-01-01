@@ -8,17 +8,20 @@ const Person = require('./models/person') // Person model / resource
 const app = express()
 
 // middleware
-app.use(cors())
+// app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())
 app.use(express.static('build'))
 
 app.get('/', (req, res) => {
+    // express automatically sets the value of the Content-Type header to be text/html.
     res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(result => {
+        // Express automatically sets the Content-Type header with the appropriate value of application/json.
+        // same as response.end(JSON.stringify(notes)) without express
         res.json(result) // toJSON is called when we make a Json object from a schema
     })
 })
@@ -73,7 +76,7 @@ app.post('/api/persons/', (req, res) => { // the req body must be in the form of
     
 })
 
-const PORT = process.env.PORT
+const PORT = 3001 //process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

@@ -15,7 +15,8 @@ const App = () => {
   const [ message, setMessage] = useState({});
 
   useEffect(() => {
-    peopleService.getAll().then(personsData => setPersons(personsData))
+    peopleService.getAll()
+      .then(personsData => setPersons(personsData))
   }, [])
     
   const addPerson = (event) => {
