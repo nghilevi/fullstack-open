@@ -4,6 +4,7 @@ import { createStore } from 'redux'
 import reducer from './reducer'
 
 const store = createStore(reducer)
+console.log('store.getState() :',store.getState())
 
 const App = () => {
   const good = () => {
@@ -11,13 +12,28 @@ const App = () => {
       type: 'GOOD'
     })
   }
+  const ok= () => {
+    store.dispatch({
+      type: 'OK'
+    })
+  }
+  const bad= () => {
+    store.dispatch({
+      type: 'BAD'
+    })
+  }
+  const reset= () => {
+    store.dispatch({
+      type: 'ZERO'
+    })
+  }
 
   return (
     <div>
-      <button onClick={good}>good</button> 
-      <button>neutral</button> 
-      <button>bad</button>
-      <button>reset stats</button>
+      <button onClick={good}>good</button>
+      <button onClick={ok}>neutral</button> 
+      <button onClick={bad}>bad</button>
+      <button onClick={reset}>reset stats</button>
       <div>good {store.getState().good}</div>
       <div>neutral</div>
       <div>bad</div>

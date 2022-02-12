@@ -32,4 +32,45 @@ describe('unicafe reducer', () => {
       bad: 0
     })
   })
+
+  test('ok is incremented', () => {
+    const action = {
+      type: 'OK'
+    }
+    const state = initialState
+
+    deepFreeze(state)
+    const newState = counterReducer(state, action)
+    expect(newState).toEqual({
+      good: 0,
+      ok: 1,
+      bad: 0
+    })
+  })
+
+  test('zero', () => {
+    const state = initialState
+    const firstAction = {
+      type: 'GOOD'
+    }
+
+    deepFreeze(state)
+    const firstState = counterReducer(state, firstAction)
+    expect(firstState).toEqual({
+      good: 1,
+      ok: 0,
+      bad: 0
+    })
+
+    const secondAction = {
+      type: 'ZERO'
+    }
+    const newState = counterReducer(state, secondAction)
+    expect(newState).toEqual({
+      good: 0,
+      ok: 0,
+      bad: 0
+    })
+  })
+
 })
