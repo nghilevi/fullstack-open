@@ -2,14 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import App from './App'
-import reducer from './reducers/anecdoteReducer'
-import {configureStore} from '@reduxjs/toolkit'
-
-const store = configureStore({
-  reducer: {
-    anecdotes: reducer
-  }
-})
+import store from './store'
 
 const renderApp = () => {
   ReactDOM.render(
