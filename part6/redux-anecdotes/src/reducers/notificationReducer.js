@@ -6,9 +6,12 @@ const notificationSlice = createSlice({
     reducers: {
       setNotification(state, action){ // shorthand for a function assigned to the method's name.
         return action.payload
+      },
+      clearNotification(state, action){
+        return ''
       }
     }
 })
   
-export const { setNotification } = notificationSlice.actions
+export const { setNotification, clearNotification } = notificationSlice.actions
 export default notificationSlice.reducer
