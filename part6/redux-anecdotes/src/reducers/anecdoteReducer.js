@@ -6,15 +6,19 @@ const anecdoteSlice = createSlice({
   name: 'anecdotes',
   initialState: [],
   reducers: {
-    addAnecdote(state, action){ // shorthand for a function assigned to the method's name.
+    // shorthand for a function assigned to the method's name.
+    addAnecdote(state, action){ // obsolete
       state.push({
         content: action.payload,
         votes: 0,
         id: getId(),
       })
     },
-    appendAnecdote(state, action) { // step 3
+    appendAnecdote(state, action) { // u hav to loop thru a lists of items and dispatch for each item
       state.push(action.payload)
+    },
+    setAnecdotes(state, action) {
+      return action.payload
     },
     addVote(state, action){
       const id = action.payload
@@ -28,5 +32,5 @@ const anecdoteSlice = createSlice({
   }
 })
 
-export const { addAnecdote,  addVote, appendAnecdote } = anecdoteSlice.actions
+export const { addAnecdote,  addVote, appendAnecdote, setAnecdotes } = anecdoteSlice.actions
 export default anecdoteSlice.reducer

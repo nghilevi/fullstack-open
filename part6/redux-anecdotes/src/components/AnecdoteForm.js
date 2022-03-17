@@ -1,16 +1,19 @@
-import { addAnecdote } from '../reducers/anecdoteReducer'
+import { appendAnecdote } from '../reducers/anecdoteReducer'
 import { useDispatch } from 'react-redux'
 import useNotification from '../hooks/useNotification'
+import anecdotesService from '../services/anecdotes'
 
 const AnecdoteForm = () => {
     
     const dispatch = useDispatch()
     const pubslishNotification = useNotification()
 
-    const createAnecdote = (event) => {
+    const createAnecdote = async (event) => {
         event.preventDefault()
-        const anecdote = event.target.anecdote.value
-        dispatch(addAnecdote(anecdote))
+        const anecdoteContent = event.target.anecdote.value
+        const newAnecdote = await anecdotesService.createNew(anecdoteContent)
+        console.log('createAnecdote: ',newAnecdote)
+        dispatch(appendAnecdote(newAnecdote))
         pubslishNotification('new anecdote created!')
     }
 
