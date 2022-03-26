@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux'
 import { addVote } from '../reducers/anecdoteReducer'
 import useNotification from '../hooks/useNotification'
@@ -10,9 +10,9 @@ const AnecdoteList = () => {
 
   const pubslishNotification = useNotification()
 
-  const vote = (id) => {
-    dispatch(addVote(id))
-    pubslishNotification('you voted for ' + id)
+  const vote = (anecdote) => {
+    dispatch(addVote(anecdote))
+    pubslishNotification('you voted for ' + anecdote.id)
   }
 
   return (
@@ -23,7 +23,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote)}>vote</button>
           </div>
         </div>
       )
