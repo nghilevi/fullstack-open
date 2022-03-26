@@ -12,7 +12,7 @@ const AnecdoteForm = () => {
         event.preventDefault()
         const anecdoteContent = event.target.anecdote.value
         const newAnecdote = await anecdotesService.createNew(anecdoteContent)
-        console.log('createAnecdote: ',newAnecdote)
+
         dispatch(appendAnecdote(newAnecdote))
         pubslishNotification('new anecdote created!')
     }
