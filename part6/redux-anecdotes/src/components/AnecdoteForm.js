@@ -1,5 +1,5 @@
 import { createNewAnecdote } from '../reducers/anecdoteReducer'
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteForm = (props) => {

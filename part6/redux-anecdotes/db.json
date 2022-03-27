@@ -27,12 +27,12 @@
     },
     {
       "content": "aaaa",
-      "votes": 1,
+      "votes": 2,
       "id": "HMyfqGi"
     },
     {
       "content": "asas",
-      "votes": 3,
+      "votes": 4,
       "id": "DsKLmGI"
     },
     {
@@ -54,6 +54,11 @@
       "content": "rlts is a long term inv",
       "votes": 0,
       "id": "6wtSEWo"
+    },
+    {
+      "content": "still working",
+      "votes": 0,
+      "id": "LoCSdgn"
     }
   ]
 }
